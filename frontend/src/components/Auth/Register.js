@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { registerUser } from "../../services/authService";
+import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../services/authService"; // Ensure this points to your auth service
 import "./Auth.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    username: "",
+    fullName: "",
     email: "",
+    phone: "",
     password: "",
+    confirmPassword: "",
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,12 +22,17 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     try {
-      const response = await registerUser(formData);
-      setSuccess(response.message || "Registration Successful!");
+      const response = await registerUser(formData); // Call backend API
+      setSuccess("Registration successful! You can now log in.");
       setError(null);
     } catch (err) {
-      setError(err.message || "An error occurred");
+      setError(err.message || "An error occurred during registration");
       setSuccess(null);
     }
   };
@@ -34,9 +43,9 @@ const Register = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
+          name="fullName"
+          placeholder="Full Name"
+          value={formData.fullName}
           onChange={handleChange}
           required
         />
@@ -49,6 +58,14 @@ const Register = () => {
           required
         />
         <input
+          type="text"
+          name="phone"
+          placeholder="Phone Number"
+          value={formData.phone}
+          onChange={handleChange}
+          required
+        />
+        <input
           type="password"
           name="password"
           placeholder="Password"
@@ -56,10 +73,33 @@ const Register = () => {
           onChange={handleChange}
           required
         />
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+        />
         <button type="submit">Register</button>
       </form>
       {error && <p className="error">{error}</p>}
-      {success && <p className="success">{success}</p>}
+      {success && (
+        <div>
+          <p className="success">{success}</p>
+          <button
+            onClick={() => navigate("/login")}
+            style={{
+              marginTop: "10px",
+              padding: "10px 20px",
+              fontSize: "16px",
+              cursor: "pointer",
+            }}
+          >
+            Go to Login
+          </button>
+        </div>
+      )}
     </div>
   );
 };

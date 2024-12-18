@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { loginUser } from "../../services/authService";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../services/authService"; // Ensure this points to your auth service
 import "./Auth.css";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,13 +16,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await loginUser(formData);
-      setSuccess("Login Successful!");
-      setError(null);
-      localStorage.setItem("token", response.token); // Store JWT token
+      const response = await loginUser(formData); // Send credentials to backend
+      localStorage.setItem("userToken", response.token); // Store JWT token in localStorage
+      setError(null); // Clear any previous errors
+      navigate("/dashboard"); // Redirect to dashboard upon success
     } catch (err) {
-      setError(err.message || "Invalid credentials");
-      setSuccess(null);
+      // Handle backend errors
+      setError(err.message || "Invalid email or password");
     }
   };
 
@@ -51,7 +49,15 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       {error && <p className="error">{error}</p>}
-      {success && <p className="success">{success}</p>}
+      <p>
+        Don't have an account?{" "}
+        <span
+          style={{ color: "#007bff", cursor: "pointer" }}
+          onClick={() => navigate("/register")}
+        >
+          Register here
+        </span>
+      </p>
     </div>
   );
 };

@@ -1,5 +1,5 @@
+const { body } = require("express-validator");
 const express = require("express");
-const { check } = require("express-validator");
 const { registerUser, loginUser } = require("../controllers/authController");
 
 const router = express.Router();
@@ -7,9 +7,10 @@ const router = express.Router();
 router.post(
   "/register",
   [
-    check("username", "Username is required").not().isEmpty(),
-    check("email", "Valid email is required").isEmail(),
-    check("password", "Password must be at least 6 characters").isLength({ min: 6 }),
+    body("full_name").notEmpty().withMessage("Full name is required"),
+    body("email").isEmail().withMessage("Valid email is required"),
+    body("phone").isMobilePhone().withMessage("Valid phone number is required"),
+    body("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters long"),
   ],
   registerUser
 );
