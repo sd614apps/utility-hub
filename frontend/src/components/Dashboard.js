@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Home.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();

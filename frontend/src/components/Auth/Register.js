@@ -8,6 +8,7 @@ const Register = () => {
     fullName: "",
     email: "",
     phone: "",
+    username: "",
     password: "",
     confirmPassword: "",
   });
@@ -20,6 +21,11 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  if (!formData) {
+    setError("Form data is required");
+    return;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
@@ -27,11 +33,38 @@ const Register = () => {
       return;
     }
 
+    // Additional client-side validation (example)
+    if (!formData.username || !formData.email || !formData.password) {
+      setError("All fields are required");
+      return;
+    }
+
+    // Remove '+' prefix from phone number if present
+    const sanitizedPhone = formData.phone.startsWith('+') ? formData.phone.slice(1) : formData.phone;
+
+    // Map form data to expected field names
+    const mappedFormData = {
+      full_name: formData.fullName,
+      email: formData.email,
+      phone: sanitizedPhone,
+      username: formData.username,
+      password: formData.password,
+    };
+  
     try {
-      const response = await registerUser(formData); // Call backend API
+      await registerUser(mappedFormData); // Call backend API
       setSuccess("Registration successful! You can now log in.");
       setError(null);
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        username: "",
+        password: "",
+        confirmPassword: "",
+      });
     } catch (err) {
+      console.error("Registration error:", err); // Log the error for debugging
       setError(err.message || "An error occurred during registration");
       setSuccess(null);
     }
@@ -66,6 +99,14 @@ const Register = () => {
           required
         />
         <input
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
+        <input
           type="password"
           name="password"
           placeholder="Password"
@@ -81,7 +122,7 @@ const Register = () => {
           onChange={handleChange}
           required
         />
-        <button type="submit">Register</button>
+        {!success && <button type="submit">Register</button>}
       </form>
       {error && <p className="error">{error}</p>}
       {success && (

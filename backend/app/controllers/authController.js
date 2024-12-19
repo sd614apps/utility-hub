@@ -6,7 +6,7 @@ const { validationResult } = require("express-validator");
 
 // Register User
 exports.registerUser = async (req, res) => {
-  const { full_name, email, phone, password } = req.body; // Updated fields
+  const { full_name, email, phone, username, password } = req.body; // Updated fields
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -30,8 +30,8 @@ exports.registerUser = async (req, res) => {
 
     // Insert user
     const newUser = await pool.query(
-      "INSERT INTO users (full_name, email, phone, password) VALUES ($1, $2, $3, $4) RETURNING id, full_name, email, phone, created_at",
-      [full_name, email, phone, hashedPassword]
+      "INSERT INTO users (full_name, email, phone, username, password) VALUES ($1, $2, $3, $4, $5) RETURNING id, full_name, email, phone, username, created_at",
+      [full_name, email, phone, username, hashedPassword]
     );
 
     res.status(201).json({ message: "User registered successfully", user: newUser.rows[0] });
@@ -43,11 +43,11 @@ exports.registerUser = async (req, res) => {
 
 // Login User
 exports.loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
     // Check if user exists
-    const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+    const user = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
     if (user.rows.length === 0) {
       return res.status(400).json({ message: "Invalid credentials" });
     }

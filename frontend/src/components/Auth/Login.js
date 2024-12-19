@@ -4,7 +4,7 @@ import { loginUser } from "../../services/authService"; // Ensure this points to
 import "./Auth.css";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const Login = () => {
       navigate("/dashboard"); // Redirect to dashboard upon success
     } catch (err) {
       // Handle backend errors
-      setError(err.message || "Invalid email or password");
+      setError(err.message || "Invalid username or password");
     }
   };
 
@@ -31,10 +31,10 @@ const Login = () => {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
+          type="username"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
           onChange={handleChange}
           required
         />

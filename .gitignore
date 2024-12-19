@@ -5,3 +5,4 @@ dist/
 .idea/
 .vscode/
 Notes.txt
+db_scripts.sql
