@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Home.css";
+import "../styles/Home.css";
+import { isAuthenticated } from "../utils/auth";
 
 const Home = () => {
   const navigate = useNavigate();
-
+  
   useEffect(() => {
-    // Check if user is logged in
-    const token = localStorage.getItem("userToken");
-    if (token) {
+    if (!isAuthenticated()) {
+      navigate("/login");
+    } else {
       navigate("/dashboard"); // Redirect to dashboard if session is active
     }
   }, [navigate]);
