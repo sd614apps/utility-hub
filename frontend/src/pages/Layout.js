@@ -1,14 +1,15 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import "../styles/global.css";
+import "../styles/Layout.css";
+import { FaUserCircle } from "react-icons/fa";
 
 const Layout = () => {
   return (
     <div className="layout-container">
       {/* Sidebar */}
       <aside className="sidebar">
-        <h2>Utility Hub</h2>
-        <nav>
+        <h2 className="sidebar-title">Utility Hub</h2>
+        <nav className="sidebar-nav">
           <NavLink to="/dashboard" className={({ isActive }) => isActive ? "active-link" : ""}>
             Dashboard
           </NavLink>
@@ -28,13 +29,14 @@ const Layout = () => {
       <div className="main-content">
         {/* Top Bar */}
         <header className="top-bar">
-          <h1>Utility Hub</h1>
+          <h1 className="top-bar-title">Utility Hub</h1>
           <div className="user-menu">
-            <button className="user-button">User &#9662;</button>
+            <FaUserCircle size={30} className="user-icon" />
             <div className="user-dropdown">
-              <NavLink to="/profile">Profile</NavLink>
-              <NavLink to="/settings">Settings</NavLink>
+              <NavLink to="/profile" className="dropdown-link">Profile</NavLink>
+              <NavLink to="/settings" className="dropdown-link">Settings</NavLink>
               <button
+                className="dropdown-link logout-button"
                 onClick={() => {
                   localStorage.removeItem("userToken");
                   window.location.href = "/login";
