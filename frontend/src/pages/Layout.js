@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/Layout.css";
 import { FaUserCircle } from "react-icons/fa";
 
 const Layout = () => {
+  const navigate = useNavigate();
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const handleLogout = () => {
+    if (window.confirm("Are you sure you want to log out?")) {
+      localStorage.removeItem("userToken");
+      navigate("/");
+    }
+  };
+
+  const toggleDropdown = () => {
+    setDropdownVisible((prev) => !prev);
+  };
+
   return (
     <div className="layout-container">
       {/* Sidebar */}
@@ -31,20 +46,19 @@ const Layout = () => {
         <header className="top-bar">
           <h1 className="top-bar-title">Utility Hub</h1>
           <div className="user-menu">
-            <FaUserCircle size={30} className="user-icon" />
-            <div className="user-dropdown">
-              <NavLink to="/profile" className="dropdown-link">Profile</NavLink>
-              <NavLink to="/settings" className="dropdown-link">Settings</NavLink>
-              <button
-                className="dropdown-link logout-button"
-                onClick={() => {
-                  localStorage.removeItem("userToken");
-                  window.location.href = "/login";
-                }}
-              >
-                Logout
-              </button>
-            </div>
+            <FaUserCircle size={30} className="user-icon" onClick={toggleDropdown} />
+            {dropdownVisible && (
+              <div className="user-dropdown">
+                <NavLink to="/profile" className="dropdown-link" onClick={() => setDropdownVisible(false)}>Profile</NavLink>
+                <NavLink to="/settings" className="dropdown-link" onClick={() => setDropdownVisible(false)}>Settings</NavLink>
+                <button
+                  onClick={handleLogout}
+                  className="button logout-button"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         </header>
 

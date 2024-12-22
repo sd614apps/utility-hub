@@ -90,19 +90,13 @@ body {
     color: #333;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: none;
+    display: flex;
     flex-direction: column;
     width: 150px;
     z-index: 1000;
-    pointer-events: none;
 }
 
-.user-menu:hover .user-dropdown, .user-menu:focus-within .user-dropdown {
-    display: flex;
-    pointer-events: auto;
-}
-
-.dropdown-link {
+.user-dropdown .dropdown-link {
     text-decoration: none;
     color: #333;
     padding: 10px;
@@ -111,7 +105,7 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.dropdown-link:hover {
+.user-dropdown .dropdown-link:hover {
     background-color: #f0f0f0;
 }
 
