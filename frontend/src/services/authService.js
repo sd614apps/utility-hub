@@ -27,3 +27,21 @@ export const loginUser = async (userData) => {
     }
   }
 };
+
+// Fetch user profile
+export const fetchUserProfile = async () => {
+  const token = localStorage.getItem("userToken");
+  const response = await axios.get(`${API_BASE_URL}/profile`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
+// Update user profile
+export const updateUserProfile = async (userData) => {
+  const token = localStorage.getItem("userToken");
+  const response = await axios.put(`${API_BASE_URL}/profile`, userData, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};

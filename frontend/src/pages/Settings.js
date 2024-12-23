@@ -1,4 +1,3 @@
-// Settings.js
 import React, { useState, useEffect } from "react";
 import "../styles/global.css";
 
@@ -21,14 +20,15 @@ const Settings = () => {
   return (
     <div className="settings-container">
       <h1>Settings</h1>
-      <div>
-        <label>
+      <div className="toggle-container">
+        <span>Enable Dark Mode</span>
+        <label className="toggle-switch">
           <input
             type="checkbox"
             checked={darkMode}
             onChange={toggleDarkMode}
           />
-          Enable Dark Mode
+          <span className="slider"></span>
         </label>
       </div>
     </div>

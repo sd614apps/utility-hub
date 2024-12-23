@@ -1,18 +1,25 @@
-// Profile.js
 import React, { useState, useEffect } from "react";
-import "../styles/global.css";
+import { fetchUserProfile, updateUserProfile } from "../services/authService";
 
 const Profile = () => {
-  const [user, setUser] = useState({ name: "", email: "" });
+  const [user, setUser] = useState(null);
   const [editing, setEditing] = useState(false);
-  const [updatedUser, setUpdatedUser] = useState({ name: "", email: "" });
+  const [updatedUser, setUpdatedUser] = useState({ full_name: "", email: "" });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch user details from API or local storage
     const fetchUser = async () => {
-      const userData = JSON.parse(localStorage.getItem("user"));
-      setUser(userData);
-      setUpdatedUser(userData);
+      try {
+        const response = await fetchUserProfile();
+        setUser(response);
+        setUpdatedUser({ full_name: response.full_name, email: response.email });
+        setError(null);
+      } catch (err) {
+        setError("Failed to load user data. Please try again.");
+      } finally {
+        setLoading(false);
+      }
     };
     fetchUser();
   }, []);
@@ -23,12 +30,26 @@ const Profile = () => {
   };
 
   const handleUpdate = async () => {
-    // Simulate API call to update user
-    setUser(updatedUser);
-    setEditing(false);
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-    alert("Profile updated successfully!");
+    try {
+      setLoading(true);
+      const response = await updateUserProfile(updatedUser);
+      setUser(response);
+      setEditing(false);
+      alert("Profile updated successfully!");
+    } catch (err) {
+      setError("Failed to update profile. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="error">{error}</p>;
+  }
 
   return (
     <div className="profile-container">
@@ -36,11 +57,11 @@ const Profile = () => {
       {editing ? (
         <div>
           <label>
-            Name:
+            Full Name:
             <input
               type="text"
-              name="name"
-              value={updatedUser.name}
+              name="full_name"
+              value={updatedUser.full_name}
               onChange={handleInputChange}
             />
           </label>
@@ -58,7 +79,7 @@ const Profile = () => {
         </div>
       ) : (
         <div>
-          <p><strong>Name:</strong> {user.name}</p>
+          <p><strong>Full Name:</strong> {user.full_name}</p>
           <p><strong>Email:</strong> {user.email}</p>
           <button onClick={() => setEditing(true)}>Edit Profile</button>
         </div>
