@@ -3,6 +3,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const authRoutes = require("./routes/authRoutes");
 const rateLimiter = require("./middleware/rateLimiter");
+const interestCalculatorRoutes = require('./features/interest-calculator/routes');
 
 require("dotenv").config();
 
@@ -17,6 +18,9 @@ app.use(rateLimiter);
 
 // Routes
 app.use("/api/auth", authRoutes);
+
+// Interest Calculator
+app.use('/api/interest', interestCalculatorRoutes);
 
 // Start server
 app.listen(PORT, () => {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "../styles/Layout.css";
+import "../styles/global.css";
 import { FaUserCircle } from "react-icons/fa";
 
 const Layout = () => {
@@ -25,16 +25,16 @@ const Layout = () => {
       <aside className="sidebar">
         <h2 className="sidebar-title">Utility Hub</h2>
         <nav className="sidebar-nav">
-          <NavLink to="/dashboard" className={({ isActive }) => isActive ? "active-link" : ""}>
+          <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "active-link" : "")}>
             Dashboard
           </NavLink>
-          <NavLink to="/utility1" className={({ isActive }) => isActive ? "active-link" : ""}>
-            Utility 1
+          <NavLink to="/interest-calculator" className={({ isActive }) => (isActive ? "active-link" : "")}>
+            Interest Calculator
           </NavLink>
-          <NavLink to="/utility2" className={({ isActive }) => isActive ? "active-link" : ""}>
+          <NavLink to="/utility2" className={({ isActive }) => (isActive ? "active-link" : "")}>
             Utility 2
           </NavLink>
-          <NavLink to="/utility3" className={({ isActive }) => isActive ? "active-link" : ""}>
+          <NavLink to="/utility3" className={({ isActive }) => (isActive ? "active-link" : "")}>
             Utility 3
           </NavLink>
         </nav>
@@ -49,12 +49,13 @@ const Layout = () => {
             <FaUserCircle size={30} className="user-icon" onClick={toggleDropdown} />
             {dropdownVisible && (
               <div className="user-dropdown">
-                <NavLink to="/profile" className="dropdown-link" onClick={() => setDropdownVisible(false)}>Profile</NavLink>
-                <NavLink to="/settings" className="dropdown-link" onClick={() => setDropdownVisible(false)}>Settings</NavLink>
-                <button
-                  onClick={handleLogout}
-                  className="button logout-button"
-                >
+                <NavLink to="/profile" className="dropdown-link" onClick={() => setDropdownVisible(false)}>
+                  Profile
+                </NavLink>
+                <NavLink to="/settings" className="dropdown-link" onClick={() => setDropdownVisible(false)}>
+                  Settings
+                </NavLink>
+                <button onClick={handleLogout} className="logout-button">
                   Logout
                 </button>
               </div>

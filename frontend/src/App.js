@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile"; // Import Profile component
 import Settings from "./pages/Settings"; // Import Settings component
 import Layout from "./pages/Layout"; // Import Layout
+import InterestCalculator from "./pages/InterestCalculator/InterestCalculator";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="interest-calculator" element={<InterestCalculator />} />
         </Route>
       </Routes>
     </Router>
