@@ -8,6 +8,7 @@ import Profile from "./pages/Profile"; // Import Profile component
 import Settings from "./pages/Settings"; // Import Settings component
 import Layout from "./pages/Layout"; // Import Layout
 import InterestCalculator from "./pages/InterestCalculator/InterestCalculator";
+import FDRDCalculator from "./pages/FDRDCalculator/FDRDCalculator";
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="interest-calculator" element={<InterestCalculator />} />
+          <Route path="fd-rd-calculator" element={<FDRDCalculator />} />
+
         </Route>
       </Routes>
     </Router>

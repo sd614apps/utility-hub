@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const InterestForm = ({ onCalculate }) => {
     const [formData, setFormData] = useState({
-        principal: '',
-        rate: '',
-        time: '',
-        frequency: 'annual', // Default frequency
-        type: 'simple', // Default interest type
+        principal: 50000, // Default principal value
+        rate: 5,          // Default interest rate
+        time: 2,          // Default time in years
+        frequency: "annual", // Default frequency
+        type: "simple",   // Default interest type
     });
+
+    const handleSliderChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: parseFloat(value) }));
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,35 +27,44 @@ const InterestForm = ({ onCalculate }) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label>Principal:</label>
+                <label>Principal Amount: ₹{formData.principal}</label>
                 <input
-                    type="number"
+                    type="range"
                     name="principal"
+                    min="1000"
+                    max="1000000"
+                    step="1000"
                     value={formData.principal}
-                    onChange={handleChange}
-                    required
+                    onChange={handleSliderChange}
                 />
             </div>
+
             <div>
-                <label>Rate (%):</label>
+                <label>Interest Rate: {formData.rate}%</label>
                 <input
-                    type="number"
+                    type="range"
                     name="rate"
+                    min="1"
+                    max="15"
+                    step="0.1"
                     value={formData.rate}
-                    onChange={handleChange}
-                    required
+                    onChange={handleSliderChange}
                 />
             </div>
+
             <div>
-                <label>Time (years):</label>
+                <label>Time Period: {formData.time} years</label>
                 <input
-                    type="number"
+                    type="range"
                     name="time"
+                    min="1"
+                    max="30"
+                    step="1"
                     value={formData.time}
-                    onChange={handleChange}
-                    required
+                    onChange={handleSliderChange}
                 />
             </div>
+
             <div>
                 <label>Frequency:</label>
                 <select name="frequency" value={formData.frequency} onChange={handleChange}>
@@ -60,6 +74,7 @@ const InterestForm = ({ onCalculate }) => {
                     <option value="monthly">Monthly</option>
                 </select>
             </div>
+
             <div>
                 <label>Interest Type:</label>
                 <select name="type" value={formData.type} onChange={handleChange}>
@@ -67,6 +82,7 @@ const InterestForm = ({ onCalculate }) => {
                     <option value="compound">Compound Interest</option>
                 </select>
             </div>
+
             <button type="submit">Calculate</button>
         </form>
     );

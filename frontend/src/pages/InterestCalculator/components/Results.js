@@ -7,8 +7,8 @@ const Results = ({ results }) => {
     return (
         <div>
             <h3>Calculation Results</h3>
-            <p>Interest: ${interest.toFixed(2)}</p>
-            <p>Total Amount: ${totalAmount.toFixed(2)}</p>
+            <p>Interest: ₹{interest.toFixed(2)}</p>
+            <p>Total Amount: ₹{totalAmount.toFixed(2)}</p>
         </div>
     );
 };

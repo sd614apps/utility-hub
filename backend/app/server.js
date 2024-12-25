@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const authRoutes = require("./routes/authRoutes");
 const rateLimiter = require("./middleware/rateLimiter");
 const interestCalculatorRoutes = require('./features/interest-calculator/routes');
+const fdRdCalculatorRoutes = require('./features/fd-rd-calculator/routes');
 
 require("dotenv").config();
 
@@ -21,6 +22,9 @@ app.use("/api/auth", authRoutes);
 
 // Interest Calculator
 app.use('/api/interest', interestCalculatorRoutes);
+
+// Add FD/RD routes
+app.use('/api/fd-rd', fdRdCalculatorRoutes);
 
 // Start server
 app.listen(PORT, () => {
