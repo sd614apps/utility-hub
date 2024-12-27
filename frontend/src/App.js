@@ -9,6 +9,7 @@ import Settings from "./pages/Settings"; // Import Settings component
 import Layout from "./pages/Layout"; // Import Layout
 import InterestCalculator from "./pages/InterestCalculator/InterestCalculator";
 import FDRDCalculator from "./pages/FDRDCalculator/FDRDCalculator";
+import LoanAmortization from "./pages/LoanAmortization/LoanAmortization";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="interest-calculator" element={<InterestCalculator />} />
           <Route path="fd-rd-calculator" element={<FDRDCalculator />} />
+          <Route path="loan-amortization" element={<LoanAmortization />} />
 
         </Route>
       </Routes>

@@ -34,8 +34,8 @@ const Layout = () => {
           <NavLink to="/fd-rd-calculator" className={({ isActive }) => (isActive ? "active-link" : "")}>
             FD & RD Calculator
           </NavLink>
-          <NavLink to="/utility3" className={({ isActive }) => (isActive ? "active-link" : "")}>
-            Utility 3
+          <NavLink to="/loan-amortization" className={({ isActive }) => (isActive ? "active-link" : "")}>
+            Loan Amortization
           </NavLink>
         </nav>
       </aside>

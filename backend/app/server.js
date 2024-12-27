@@ -5,6 +5,7 @@ const authRoutes = require("./routes/authRoutes");
 const rateLimiter = require("./middleware/rateLimiter");
 const interestCalculatorRoutes = require('./features/interest-calculator/routes');
 const fdRdCalculatorRoutes = require('./features/fd-rd-calculator/routes');
+const loanAmortizationRoutes = require('./features/loan-amortization/routes');
 
 require("dotenv").config();
 
@@ -23,8 +24,11 @@ app.use("/api/auth", authRoutes);
 // Interest Calculator
 app.use('/api/interest', interestCalculatorRoutes);
 
-// Add FD/RD routes
+// FD/RD Calculator
 app.use('/api/fd-rd', fdRdCalculatorRoutes);
+
+// Loan Amortization
+app.use('/api/loan', loanAmortizationRoutes);
 
 // Start server
 app.listen(PORT, () => {
